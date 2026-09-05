@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Dashboard = () => {
@@ -17,7 +18,12 @@ const Dashboard = () => {
           </button>
         </div>
         <p>Welcome, {user?.name}!</p>
-        <p className="mt-4 text-gray-600">The full dashboard will be implemented in Phase 5.</p>
+        <div className="mt-6">
+          <Link to="/expenses" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Manage Expenses
+          </Link>
+        </div>
+        <p className="mt-8 text-gray-500 text-sm border-t pt-4">The full dashboard charts will be implemented in Phase 5.</p>
       </div>
     </div>
   );
