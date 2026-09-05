@@ -1,14 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f3f4f6; /* Tailwind gray-100 */
+:root {
+  --bottle-green: #0C3B2E;
+  --bottle-green-light: #1F5C46;
+  --bottle-green-pale: #E4EDE8;
+  --paper: #F7F5F0;
+  --ink: #1B1F1D;
+  --muted: #6B7570;
+  --line: #D6DED8;
+  --overspend-rust: #B5482A;
 }
 
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Focus Ring for Accessibility */
+*:focus-visible {
+  outline: 2px solid var(--bottle-green);
+  outline-offset: 2px;
+}
+
+.font-mono-numbers {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Base Input Styles */
+input, select, textarea {
+  background-color: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+input::placeholder {
+  color: #a39d8f;
+}
+
+/* Disable animations for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

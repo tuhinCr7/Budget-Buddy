@@ -1,127 +1,148 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axiosClient from '../api/axiosClient';
 
-const ExpenseForm = ({ expenseToEdit, onSave, onCancel }) => {
-  const [amount, setAmount] = useState('');
+const ExpenseForm = ({ onSave, onCancel }) => {
+  const [displayAmount, setDisplayAmount] = useState('');
+  const [rawAmount, setRawAmount] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const categories = ['Food', 'Transport', 'Rent', 'Entertainment', 'Utilities', 'Other'];
+  const categories = [
+    { name: 'Food', color: 'bg-bottle-green text-paper', icon: '🍔' },
+    { name: 'Transport', color: 'bg-bottle-green-light text-paper', icon: '🚆' },
+    { name: 'Rent', color: 'bg-[#367A5E] text-paper', icon: '🏠' },
+    { name: 'Entertainment', color: 'bg-[#4F9B78] text-paper', icon: '🎬' },
+    { name: 'Utilities', color: 'bg-[#6FB593] text-paper', icon: '💡' },
+    { name: 'Other', color: 'bg-bottle-green-pale text-bottle-green', icon: '📦' }
+  ];
 
-  useEffect(() => {
-    if (expenseToEdit) {
-      setAmount(expenseToEdit.amount);
-      setCategory(expenseToEdit.category);
-      setDescription(expenseToEdit.description || '');
-      // Format date for the input type="date"
-      const d = new Date(expenseToEdit.date);
-      setDate(d.toISOString().split('T')[0]);
-    } else {
-      setDate(new Date().toISOString().split('T')[0]);
+  // Currency auto-formatter
+  const handleAmountChange = (e) => {
+    let val = e.target.value.replace(/\D/g, '');
+    if (!val) {
+      setDisplayAmount('');
+      setRawAmount('');
+      return;
     }
-  }, [expenseToEdit]);
+    const num = parseInt(val, 10) / 100;
+    setRawAmount(num);
+    setDisplayAmount(num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!category) {
+      setError('Please select a category');
+      return;
+    }
+    if (!rawAmount || isNaN(Number(rawAmount))) {
+      setError('Please enter a valid amount');
+      return;
+    }
+    
     setIsLoading(true);
     setError('');
 
-    const expenseData = { amount: Number(amount), category, description, date };
+    const expenseData = { amount: Number(rawAmount), category, description, date };
 
     try {
-      if (expenseToEdit) {
-        await axiosClient.put(`/expenses/${expenseToEdit._id}`, expenseData);
-      } else {
-        await axiosClient.post('/expenses', expenseData);
-      }
-      onSave(); // Trigger a refresh in the parent component
+      await onSave(expenseData);
+      
+      // Reset form but stay open
+      setRawAmount('');
+      setDisplayAmount('');
+      setDescription('');
+      // Toast notification is assumed to be called here or in parent
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save expense.');
+      setError(err.response?.data?.message || 'Failed to add expense.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-        <h2 className="text-2xl font-bold mb-4">{expenseToEdit ? 'Edit Expense' : 'Add Expense'}</h2>
+    <div className="w-full h-full flex flex-col">
+      {error && <div className="text-overspend-rust text-sm font-medium mb-4 bg-overspend-rust/10 p-3 rounded-md">{error}</div>}
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8 flex-1">
         
-        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Amount</label>
-            <input
-              type="number"
-              step="0.01"
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Category</label>
-            <select
-              required
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 bg-white"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="" disabled>Select category</option>
-              {categories.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Date</label>
-            <input
-              type="date"
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Description (Optional)</label>
+        {/* Amount */}
+        <div>
+          <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Amount</label>
+          <div className="relative">
+            <span className="absolute left-0 top-2 text-muted font-mono-numbers text-3xl">$</span>
             <input
               type="text"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              required
+              className="w-full py-2 pl-8 pr-0 border-b border-line bg-transparent font-mono-numbers text-4xl text-ink focus:outline-none focus:border-bottle-green transition-colors"
+              value={displayAmount}
+              onChange={handleAmountChange}
+              placeholder="0.00"
             />
           </div>
+        </div>
 
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-            >
-              {isLoading ? 'Saving...' : 'Save'}
-            </button>
+        {/* Category Picker (Icon Buttons) */}
+        <div>
+          <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-3">Select Category</label>
+          <div className="grid grid-cols-2 gap-3">
+            {categories.map(c => (
+              <button
+                key={c.name}
+                type="button"
+                onClick={() => setCategory(c.name)}
+                className={`flex items-center justify-start gap-3 px-4 py-3 rounded-xl border transition-all ${
+                  category === c.name 
+                  ? `${c.color} border-transparent shadow-sm scale-[1.02]` 
+                  : 'bg-paper border-line text-ink hover:border-ink/50'
+                }`}
+              >
+                <span className="text-xl">{c.icon}</span>
+                <span className="text-sm font-semibold">{c.name}</span>
+              </button>
+            ))}
           </div>
-        </form>
-      </div>
+        </div>
+
+        {/* Date */}
+        <div>
+          <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Date</label>
+          <input
+            type="date"
+            required
+            className="w-full py-3 px-4 border border-line rounded-lg bg-transparent text-sm text-ink focus:outline-none focus:border-bottle-green focus:ring-1 focus:ring-bottle-green transition-colors"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Description (Optional)</label>
+          <input
+            type="text"
+            className="w-full py-3 px-4 border border-line rounded-lg bg-transparent text-sm text-ink focus:outline-none focus:border-bottle-green focus:ring-1 focus:ring-bottle-green transition-colors"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="e.g. Groceries at Trader Joe's"
+          />
+        </div>
+
+        <div className="flex justify-end mt-auto pt-8 pb-4">
+          <button
+            type="submit"
+            disabled={isLoading || !category || !rawAmount}
+            className="w-full bg-bottle-green text-paper hover:bg-bottle-green-light active:scale-[0.98] font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-lg"
+          >
+            {isLoading ? <span className="w-5 h-5 border-2 border-paper border-t-transparent rounded-full animate-spin"></span> : 'Record Expense'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
 
 export default ExpenseForm;
-
