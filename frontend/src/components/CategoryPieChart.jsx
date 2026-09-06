@@ -90,7 +90,7 @@ const CategoryPieChart = ({ data, onCategoryClick, selectedCategory }) => {
             left: position.left + tooltipModel.caretX,
             top: position.top + tooltipModel.caretY,
             title: tooltipModel.title[0] || chartData.labels[dataIndex],
-            body: `$${val.toFixed(2)} (${percent}%)`
+            body: `৳${val.toFixed(2)} (${percent}%)`
           });
         }
       }

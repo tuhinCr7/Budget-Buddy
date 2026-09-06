@@ -86,7 +86,7 @@ const TrendChart = ({ data }) => {
             left: position.left + tooltipModel.caretX,
             top: position.top + tooltipModel.caretY,
             title: tooltipModel.title[0],
-            body: `$${val.toFixed(2)}`
+            body: `৳${val.toFixed(2)}`
           });
         }
       }
@@ -102,7 +102,7 @@ const TrendChart = ({ data }) => {
         ticks: { 
           font: { family: 'IBM Plex Mono', size: 11 }, 
           color: 'var(--ink)',
-          callback: (value) => `$${value}` 
+          callback: (value) => `৳${value}` 
         }
       }
     }

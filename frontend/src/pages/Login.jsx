@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
-import { Wallet } from 'lucide-react';
+import { Wallet, Home as HomeIcon } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
@@ -56,8 +56,13 @@ const Login = () => {
         {/* Top Section - Image / Graphic */}
         <div className="relative h-[40%] w-full bg-gradient-to-br from-bottle-green-light to-bottle-green overflow-hidden flex flex-col items-center justify-center">
           
+          {/* Back/Home Button */}
+          <Link to="/" className="absolute top-6 left-6 z-40 w-10 h-10 rounded-full bg-paper/10 hover:bg-paper/20 flex items-center justify-center text-paper backdrop-blur transition-all active:scale-90">
+            <HomeIcon className="w-5 h-5" />
+          </Link>
+
           {/* Logo at the very top */}
-          <div className="absolute top-8 left-0 w-full flex justify-center items-center gap-2 z-30">
+          <div className="absolute top-8 left-0 w-full flex justify-center items-center gap-2 z-30 pointer-events-none">
             <Wallet className="w-6 h-6 text-paper" />
             <span className="text-paper font-extrabold text-xl tracking-tight">BudgetBuddy</span>
           </div>

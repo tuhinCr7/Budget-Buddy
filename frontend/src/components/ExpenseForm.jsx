@@ -67,13 +67,13 @@ const ExpenseForm = ({ onSave, onCancel }) => {
     <div className="w-full h-full flex flex-col">
       {error && <div className="text-overspend-rust text-sm font-medium mb-4 bg-overspend-rust/10 p-3 rounded-md">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 flex-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
         
         {/* Amount */}
         <div>
           <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Amount</label>
           <div className="relative">
-            <span className="absolute left-0 top-2 text-muted font-mono-numbers text-3xl">$</span>
+            <span className="absolute left-0 top-2 text-muted font-mono-numbers text-3xl">৳</span>
             <input
               type="text"
               required
@@ -131,11 +131,11 @@ const ExpenseForm = ({ onSave, onCancel }) => {
           />
         </div>
 
-        <div className="flex justify-end mt-auto pt-8 pb-4">
+        <div className="flex justify-end pt-4 pb-4">
           <button
             type="submit"
             disabled={isLoading || !category || !rawAmount}
-            className="w-full bg-bottle-green text-paper hover:bg-bottle-green-light active:scale-[0.98] font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-lg"
+            className="w-full bg-bottle-green text-paper hover:bg-bottle-green-light active:scale-[0.98] font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-lg shadow-md"
           >
             {isLoading ? <span className="w-5 h-5 border-2 border-paper border-t-transparent rounded-full animate-spin"></span> : 'Record Expense'}
           </button>

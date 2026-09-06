@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { LogOut, Wallet } from 'lucide-react';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -12,12 +13,12 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-bottle-green rounded-lg flex items-center justify-center text-paper">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 bg-bottle-green rounded-lg flex items-center justify-center text-paper group-hover:scale-105 transition-transform">
               <Wallet className="w-5 h-5" />
             </div>
-            <span className="font-bold text-xl text-ink tracking-tight">BudgetBuddy</span>
-          </div>
+            <span className="font-bold text-xl text-ink tracking-tight group-hover:text-bottle-green transition-colors">BudgetBuddy</span>
+          </Link>
 
           {/* Right Side */}
           <div className="flex items-center gap-4">

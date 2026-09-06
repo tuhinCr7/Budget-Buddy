@@ -127,7 +127,7 @@ const Dashboard = () => {
         <Card>
           <CardContent className="py-5">
             <p className="text-sm font-semibold text-muted uppercase tracking-wider mb-1">Total Spent</p>
-            <p className="text-3xl font-bold text-ink font-mono-numbers">${currentMonthSpend.toFixed(2)}</p>
+            <p className="text-3xl font-bold text-ink font-mono-numbers">৳{currentMonthSpend.toFixed(2)}</p>
           </CardContent>
         </Card>
         
@@ -135,7 +135,7 @@ const Dashboard = () => {
           <CardContent className="py-5 flex justify-between items-start">
             <div>
               <p className="text-sm font-semibold text-muted uppercase tracking-wider mb-1">Monthly Budget</p>
-              <p className="text-3xl font-bold text-ink font-mono-numbers">${budget.toFixed(2)}</p>
+              <p className="text-3xl font-bold text-ink font-mono-numbers">৳{budget.toFixed(2)}</p>
             </div>
           </CardContent>
         </Card>
@@ -144,7 +144,7 @@ const Dashboard = () => {
           <CardContent className="py-5">
             <p className="text-sm font-semibold text-muted uppercase tracking-wider mb-1">Remaining</p>
             <p className={`text-3xl font-bold font-mono-numbers ${remaining < 0 ? 'text-overspend-rust' : 'text-bottle-green'}`}>
-              ${Math.abs(remaining).toFixed(2)} {remaining < 0 && 'Over'}
+              ৳{Math.abs(remaining).toFixed(2)} {remaining < 0 && 'Over'}
             </p>
           </CardContent>
         </Card>

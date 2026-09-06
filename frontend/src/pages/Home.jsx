@@ -34,7 +34,7 @@ const Home = () => {
         <div className="max-w-3xl">
           <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tighter text-ink mb-6 leading-tight">
             Master your money. <br/>
-            <span className="text-bottle-green">Track every dollar.</span>
+            <span className="text-bottle-green">Track every taka.</span>
           </h1>
           <p className="text-lg lg:text-xl text-muted font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
             A tactile, precision-driven ledger for the modern age. Leave the spreadsheets behind without losing control of your financial future.

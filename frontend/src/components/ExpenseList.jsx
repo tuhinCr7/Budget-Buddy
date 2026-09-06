@@ -200,7 +200,7 @@ const ExpenseList = ({ expenses, onRefresh, onOptimisticUpdate, onOptimisticDele
                   {expense.category}
                 </span>
                 <span className="text-base font-bold font-mono-numbers">
-                  ${expense.amount.toFixed(2)}
+                  ৳{expense.amount.toFixed(2)}
                 </span>
               </div>
 
@@ -223,7 +223,7 @@ const ExpenseList = ({ expenses, onRefresh, onOptimisticUpdate, onOptimisticDele
               </div>
 
               <div className="md:col-span-2 text-sm text-right font-mono-numbers font-semibold hidden md:block">
-                ${expense.amount.toFixed(2)}
+                ৳{expense.amount.toFixed(2)}
               </div>
 
               {/* Hover Actions (Delete) */}

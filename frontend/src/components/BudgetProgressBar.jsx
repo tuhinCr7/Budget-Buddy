@@ -49,7 +49,7 @@ const BudgetProgressBar = ({ currentSpend, userBudget, onBudgetUpdate }) => {
           <div className="text-sm text-ink/60 flex items-center gap-2 mt-1">
             {isEditing ? (
               <div className="flex items-center gap-2">
-                <span className="font-mono-numbers">$</span>
+                <span className="font-mono-numbers">৳</span>
                 <input 
                   type="number"
                   className="border-b border-line bg-transparent focus:outline-none focus:border-ink w-24 font-mono-numbers text-ink"
@@ -64,7 +64,7 @@ const BudgetProgressBar = ({ currentSpend, userBudget, onBudgetUpdate }) => {
               </div>
             ) : (
               <>
-                Target: <span className="font-mono-numbers">${budget.toFixed(2)}</span>
+                Target: <span className="font-mono-numbers">৳{budget.toFixed(2)}</span>
                 <button onClick={() => setIsEditing(true)} className="text-ink hover:text-bottle-green underline decoration-line underline-offset-4 ml-2">Edit</button>
               </>
             )}
@@ -73,7 +73,7 @@ const BudgetProgressBar = ({ currentSpend, userBudget, onBudgetUpdate }) => {
         
         <div className="text-right">
           <div className="text-4xl font-bold font-mono-numbers tracking-tight text-ink">
-            ${currentSpend.toFixed(2)}
+            ৳{currentSpend.toFixed(2)}
           </div>
           <div className="text-sm text-ink/60 mt-1 uppercase tracking-widest text-xs font-semibold">
             Spent
