@@ -1,123 +1,108 @@
-# BudgetBuddy
+<div align="center">
+  
+# 💸 BudgetBuddy
+**Master your money. Track every taka.**
 
-BudgetBuddy is a full-stack expense tracker web application built using the MERN stack (MongoDB, Express, React, Node.js). It allows users to track their expenses, visualize their spending habits, and manage monthly budgets.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-BudgetBuddy-37A175?style=for-the-badge)](https://budget-buddy-production.vercel.app/) <!-- Replace with your actual frontend URL -->
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](#)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](#)
 
-## Features
+</div>
 
-- **User Authentication**: Secure JWT-based signup, login, and protected routes. Passwords hashed with bcrypt.
-- **Expense Management**: Complete CRUD operations for expenses. Sort by date and filter by category or date range.
-- **Interactive Dashboard**:
-  - Pie chart showing spending breakdown by category (Chart.js)
-  - Bar chart showing 6-month spending trend (Chart.js)
-  - Budget progress bar (Green/Yellow/Red) indicating spend vs budget target.
-- **Responsive UI**: Styled with Tailwind CSS for mobile and desktop support.
+<br />
 
-## Tech Stack
+## 📖 What is BudgetBuddy?
+**BudgetBuddy** is a modern, blazing-fast personal finance tracker designed to help you regain control of your wallet. Say goodbye to messy spreadsheets and hello to a beautiful, intuitive dashboard that visualizes your spending habits in real-time. 
 
-- **Frontend**: React (Vite), React Router, Axios, Tailwind CSS, Chart.js (react-chartjs-2)
-- **Backend**: Node.js, Express, Mongoose, JWT, bcrypt
-- **Database**: MongoDB (Atlas)
+Whether you're trying to hit a monthly savings goal or just want to know where all your money went this month, BudgetBuddy gives you the exact insights you need without the clutter.
 
-## Project Structure
+---
 
+## 📸 Sneak Peek
+*(Replace these placeholder links with actual screenshots of your app!)*
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x450.png?text=Dashboard+Screenshot" alt="BudgetBuddy Dashboard" width="800"/>
+  <p><i>The main dashboard featuring the 6-month trend chart and category breakdown.</i></p>
+</div>
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x450.png?text=Dark+Mode+Screenshot" alt="BudgetBuddy Dark Mode" width="800"/>
+  <p><i>Seamless Dark Mode for tracking expenses at night.</i></p>
+</div>
+
+---
+
+## ✨ Key Features
+
+- 🌙 **Seamless Dark Mode:** A beautiful custom dark theme that respects your eyes at night.
+- 🎯 **Monthly Budgeting:** Set a monthly target and watch your live progress bar update as you log expenses.
+- 📊 **Visual Analytics:** Interactive Pie charts and Trend graphs that automatically categorize your spending.
+- ⚡ **Instant Logging:** A slide-over ledger drawer lets you record expenses in seconds without refreshing the page.
+- 🔒 **Secure Auth:** JWT-based authentication with fully encrypted passwords.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- **React (Vite)** - For a lightning-fast user interface.
+- **Tailwind CSS** - For responsive, custom styling (featuring the custom "Bottle Green" theme).
+- **Chart.js** - For beautiful data visualizations.
+- **Lucide React** - For sleek, modern icons.
+
+**Backend:**
+- **Node.js & Express.js** - Robust REST API architecture.
+- **MongoDB & Mongoose** - NoSQL database for flexible data storage.
+- **JWT & bcryptjs** - For secure user sessions and password hashing.
+
+---
+
+## 🚀 Quick Start (Local Setup)
+
+Want to run BudgetBuddy on your own machine? Follow these steps:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/Budget-Buddy.git
+cd Budget-Buddy
 ```
-budgetbuddy/
-├── backend/            # Express Server API
-│   ├── config/         # DB config
-│   ├── middleware/     # JWT Auth middleware
-│   ├── models/         # Mongoose Schemas (User, Expense)
-│   ├── routes/         # Express routes (auth, expenses, user)
-│   └── server.js       # Entry point
-└── frontend/           # React Vite App
-    ├── src/
-    │   ├── api/        # Axios client with interceptors
-    │   ├── components/ # Reusable UI components & Charts
-    │   ├── context/    # Global Auth State
-    │   ├── pages/      # Route Pages
-    │   ├── App.jsx     # Main Router
-    │   └── main.jsx    # React Entry
-    ├── tailwind.config.js
-    └── vercel.json     # Vercel SPA deployment config
-```
 
-## Setup Instructions (Local Development)
-
-### 1. Prerequisites
-- Node.js (v16+)
-- MongoDB Atlas account (or local MongoDB)
-
-### 2. Backend Setup
+### 2. Setup the Backend
 ```bash
 cd backend
 npm install
 ```
-Create a `.env` file in the `backend` folder using `.env.example` as a template:
+Create a `.env` file in the `backend` folder and add:
 ```env
-NODE_ENV=development
-PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/budgetbuddy?retryWrites=true&w=majority
-JWT_SECRET=your_super_secret_jwt_key
+PORT=5001
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
 ```
-Start the server:
+Run the backend:
 ```bash
-npm run dev # or node server.js
+node server.js
 ```
 
-### 3. Frontend Setup
+### 3. Setup the Frontend
+Open a new terminal window:
 ```bash
 cd frontend
 npm install
-```
-Start the React development server:
-```bash
 npm run dev
 ```
-The app will be available at `http://localhost:5173`. Ensure the backend is running on port 5000 so the Axios client (`baseURL: 'http://localhost:5000/api'`) connects correctly.
+The app will now be running on `http://localhost:5173`!
 
-## API Documentation
+---
 
-### Auth Routes (`/api/auth`)
-- `POST /signup`: Register a new user (Body: `name`, `email`, `password`)
-- `POST /login`: Authenticate user (Body: `email`, `password`)
-- `GET /me`: Get logged-in user profile (Header: `Authorization: Bearer <token>`)
+## ☁️ Deployment
 
-### Expense Routes (`/api/expenses`) - *Protected*
-- `GET /`: Get all expenses (Query params: `category`, `startDate`, `endDate`)
-- `POST /`: Add expense (Body: `amount`, `category`, `date`, `description`)
-- `PUT /:id`: Edit expense
-- `DELETE /:id`: Delete expense
-- `GET /summary`: Get aggregated data for dashboard charts
+- **Backend** is configured to easily deploy to [Render](https://render.com/). Just set the root directory to `backend`, add your environment variables, and use the start command `npm start`.
+- **Frontend** is configured to easily deploy to [Vercel](https://vercel.com/). Set the root directory to `frontend`, add the `VITE_API_URL` environment variable pointing to your Render backend, and deploy!
 
-### User Routes (`/api/user`) - *Protected*
-- `PUT /budget`: Set monthly budget (Body: `monthlyBudget`)
+---
 
-## Deployment Guide
-
-### Database
-1. Create a cluster on **MongoDB Atlas**.
-2. Add your deployment IPs to the Network Access whitelist (or allow all `0.0.0.0/0`).
-3. Get the connection string.
-
-### Backend (Render / Heroku)
-1. Push your code to GitHub.
-2. Connect your repo to **Render** and create a new "Web Service".
-3. Set the Root Directory to `backend`.
-4. Build command: `npm install`
-5. Start command: `node server.js`
-6. Add Environment Variables (`MONGO_URI`, `JWT_SECRET`).
-
-### Frontend (Vercel)
-1. In `frontend/src/api/axiosClient.js`, update the `baseURL` to point to your live Render backend URL.
-2. Connect your repo to **Vercel**.
-3. Set the Root Directory to `frontend`.
-4. The `vercel.json` file is already included to handle React Router SPA routing on refresh.
-5. Deploy!
-
-## Future Improvements
-
-- Add OAuth login (Google/GitHub).
-- Implement recurring expenses (subscriptions).
-- Add support for multiple currencies.
-- Export expenses to CSV/PDF.
-- Add user profile picture uploads.
-
+<div align="center">
+  <i>Built with ❤️ to make personal finance easy.</i>
+</div>
