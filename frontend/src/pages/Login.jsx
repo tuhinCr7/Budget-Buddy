@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { Wallet } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
@@ -12,10 +13,14 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Validate Email
+  // If already logged in, go to dashboard
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
+
   useEffect(() => {
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setEmailError('Invalid email format');
@@ -35,7 +40,7 @@ const Login = () => {
       await login(email, password);
       setIsSuccess(true);
       setTimeout(() => {
-        navigate('/');
+        navigate('/dashboard');
       }, 600);
     } catch (err) {
       setServerError(err.response?.data?.message || 'Invalid credentials.');
@@ -44,89 +49,67 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-paper font-sans">
-      
-      {/* LEFT: Branding Split Screen */}
-      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-bottle-green p-12 text-paper relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-paper/5 rounded-full blur-3xl -mr-48 -mt-48 pointer-events-none"></div>
+    <div className="min-h-screen bg-bottle-green flex items-center justify-center font-sans overflow-hidden p-4 sm:p-8">
+      {/* Mobile-app style container */}
+      <div className="w-full max-w-[400px] h-[800px] max-h-full bg-paper rounded-[40px] shadow-2xl relative flex flex-col overflow-hidden animate-fade-in border-4 border-ink/5">
         
-        <div className="relative z-10">
-          <h1 className="text-3xl font-extrabold tracking-tighter">BudgetBuddy</h1>
-        </div>
-        
-        <div className="max-w-md relative z-10">
-          <h2 className="text-5xl font-bold leading-tight mb-6 tracking-tight">Access your<br/>financial ledger.</h2>
-          <p className="text-paper/80 text-lg font-medium leading-relaxed">
-            Welcome back. All your entries, charts, and budget limits are securely synced and ready.
-          </p>
-        </div>
-        
-        <div className="text-paper/60 font-mono-numbers text-sm relative z-10">
-          © {new Date().getFullYear()} BudgetBuddy System
-        </div>
-      </div>
-
-      {/* RIGHT: Form Container */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md bg-paper border border-line shadow-md p-8 sm:p-10 rounded-2xl relative">
+        {/* Top Section - Image / Graphic */}
+        <div className="relative h-[40%] w-full bg-gradient-to-br from-bottle-green-light to-bottle-green overflow-hidden flex flex-col items-center justify-center">
           
-          {/* Mobile Heading */}
-          <div className="mb-8 lg:hidden text-center">
-            <h1 className="text-4xl font-extrabold tracking-tighter text-bottle-green">BudgetBuddy</h1>
+          {/* Logo at the very top */}
+          <div className="absolute top-8 left-0 w-full flex justify-center items-center gap-2 z-30">
+            <Wallet className="w-6 h-6 text-paper" />
+            <span className="text-paper font-extrabold text-xl tracking-tight">BudgetBuddy</span>
           </div>
-          
-          <h2 className="text-3xl font-bold text-ink mb-2 tracking-tight">Log In</h2>
-          <p className="text-muted text-sm font-medium mb-8">Enter your credentials to continue.</p>
-          
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5 animate-fade-in">
-            
 
-            {/* EMAIL */}
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-paper/10 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-paper/10 rounded-full blur-3xl"></div>
+          
+          <div className="z-10 flex flex-col items-center mt-8">
+             <div className="w-20 h-20 rounded-2xl bg-paper/20 backdrop-blur flex items-center justify-center border border-paper/30 shadow-lg">
+                <svg className="w-10 h-10 text-paper" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+             </div>
+          </div>
+        </div>
+
+        {/* Bottom Section - Form */}
+        <div className="flex-1 bg-paper relative flex flex-col px-8 pt-10 pb-8 animate-fade-in overflow-y-auto">
+          <h2 className="text-3xl font-extrabold text-ink mb-2">Welcome Back</h2>
+          <p className="text-muted text-sm font-medium mb-8">Access your financial ledger.</p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <div className="flex justify-between items-baseline mb-1.5">
-                <label className="block text-xs font-bold text-muted uppercase tracking-wider" htmlFor="email">
-                  Email
-                </label>
-                {emailError && <span className="text-overspend-rust text-xs font-bold">{emailError}</span>}
-              </div>
               <input
                 type="email"
-                id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full py-2.5 px-3 border bg-transparent focus:outline-none focus:ring-1 transition-colors text-ink placeholder:text-ink/30 
-                  ${emailError ? 'border-overspend-rust focus:border-overspend-rust focus:ring-overspend-rust' : 'border-line focus:border-bottle-green focus:bg-bottle-green-pale focus:ring-bottle-green'}`}
-                placeholder="jane@example.com"
+                className={`w-full py-4 px-5 bg-bottle-green-pale rounded-xl border-none focus:outline-none focus:ring-2 text-ink placeholder:text-muted ${emailError ? 'focus:ring-overspend-rust' : 'focus:ring-bottle-green'}`}
+                placeholder="Email Address"
                 required
               />
             </div>
-            
-            {/* PASSWORD */}
             <div>
-              <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-1.5" htmlFor="password">
-                Password
-              </label>
               <input
                 type="password"
-                id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full py-2.5 px-3 border border-line bg-transparent focus:outline-none focus:border-bottle-green focus:bg-bottle-green-pale focus:ring-1 focus:ring-bottle-green transition-colors text-ink placeholder:text-ink/30"
-                placeholder="••••••••"
+                className="w-full py-4 px-5 bg-bottle-green-pale rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-bottle-green text-ink placeholder:text-muted"
+                placeholder="Password"
                 required
               />
               {serverError && (
-                <div className="mt-2 text-overspend-rust text-xs font-bold animate-fade-in">
+                <div className="mt-2 text-overspend-rust text-xs font-bold px-1">
                   {serverError}
                 </div>
               )}
             </div>
-            
-            {/* SUBMIT BUTTON */}
+
             <button
               type="submit"
               disabled={isLoading || isSuccess}
-              className={`mt-4 w-full py-3.5 px-4 font-bold transition-all flex justify-center items-center shadow-sm
+              className={`mt-4 w-full py-4 rounded-full font-bold transition-all flex justify-center items-center shadow-md
                 ${isSuccess ? 'animate-success-pop bg-bottle-green text-paper' : 'bg-bottle-green text-paper hover:bg-bottle-green-light active:scale-[0.98]'} 
                 disabled:opacity-70 disabled:cursor-not-allowed`}
             >
@@ -139,16 +122,15 @@ const Login = () => {
               )}
             </button>
           </form>
-          
-          <div className="mt-8 text-center pt-6">
+
+          <div className="mt-auto text-center pt-8">
             <p className="text-muted font-medium text-sm">
               New to BudgetBuddy?{' '}
-              <Link to="/signup" className="text-bottle-green font-bold hover:underline underline-offset-2 transition-all">
+              <Link to="/signup" className="text-bottle-green font-bold hover:underline">
                 Start a ledger
               </Link>
             </p>
           </div>
-
         </div>
       </div>
     </div>
