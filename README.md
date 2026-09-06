@@ -23,7 +23,7 @@ Whether you're trying to hit a monthly savings goal or just want to know where a
 *(Replace these placeholder links with actual screenshots of your app!)*
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png?text=Dashboard+Screenshot" alt="BudgetBuddy Dashboard" width="800"/>
+  <img src="Screenshot 2026-09-07 at 2.55.18 AM.png" alt="BudgetBuddy Dashboard" width="800"/>
   <p><i>The main dashboard featuring the 6-month trend chart and category breakdown.</i></p>
 </div>
 
