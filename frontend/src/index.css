@@ -15,6 +15,17 @@
   --overspend-rust: #B5482A;
 }
 
+[data-theme="dark"] {
+  --bottle-green: #37A175;
+  --bottle-green-light: #4AC290;
+  --bottle-green-pale: #1A2E26;
+  --paper: #111413;
+  --ink: #E8F0EC;
+  --muted: #889690;
+  --line: #26332E;
+  --overspend-rust: #E36449;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;

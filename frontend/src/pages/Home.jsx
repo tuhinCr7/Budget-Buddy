@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Wallet, TrendingUp, PieChart, ShieldCheck } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Home = () => {
   const { user, loading } = useContext(AuthContext);
@@ -19,8 +20,16 @@ const Home = () => {
           </div>
           <span className="font-extrabold text-xl tracking-tight text-bottle-green">BudgetBuddy</span>
         </div>
+        
+        {/* Desktop Nav Links */}
+        <div className="hidden md:flex items-center gap-8 font-semibold text-sm text-muted">
+          <a href="#how-it-works" className="hover:text-ink transition-colors">How it Works</a>
+          <a href="#features" className="hover:text-ink transition-colors">Features</a>
+        </div>
+
         <div className="flex items-center gap-4">
-          <Link to="/login" className="text-sm font-bold text-muted hover:text-ink transition-colors">
+          <ThemeToggle />
+          <Link to="/login" className="text-sm font-bold text-muted hover:text-ink transition-colors hidden sm:block">
             Login
           </Link>
           <Link to="/signup" className="text-sm font-bold bg-bottle-green text-paper px-4 py-2 rounded-full hover:bg-bottle-green-light transition-all active:scale-95 shadow-sm">
@@ -51,10 +60,44 @@ const Home = () => {
       </header>
 
       {/* How it Works Section */}
-      <section className="py-20 px-6 bg-paper">
+      <section id="how-it-works" className="py-24 px-6 bg-paper border-b border-line">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink mb-4">How BudgetBuddy Works</h2>
+            <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink mb-4">How it Works</h2>
+            <p className="text-muted font-medium max-w-xl mx-auto">Get started in three simple steps.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+            {/* Step 1 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-bottle-green flex items-center justify-center text-2xl font-bold text-bottle-green mb-6 bg-paper relative z-10">1</div>
+              <h3 className="text-xl font-bold text-ink mb-3">Create an Account</h3>
+              <p className="text-muted font-medium">Sign up in seconds and get instant access to your new digital ledger.</p>
+            </div>
+            {/* Step 2 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-bottle-green flex items-center justify-center text-2xl font-bold text-bottle-green mb-6 bg-paper relative z-10">2</div>
+              <h3 className="text-xl font-bold text-ink mb-3">Set a Target</h3>
+              <p className="text-muted font-medium">Define your monthly budget so you always know your remaining runway.</p>
+            </div>
+            {/* Step 3 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-bottle-green flex items-center justify-center text-2xl font-bold text-bottle-green mb-6 bg-paper relative z-10">3</div>
+              <h3 className="text-xl font-bold text-ink mb-3">Log Expenses</h3>
+              <p className="text-muted font-medium">Record every taka spent. We'll categorize and visualize it automatically.</p>
+            </div>
+            
+            {/* Connecting line for desktop */}
+            <div className="hidden md:block absolute top-8 left-[15%] right-[15%] h-[4px] bg-bottle-green-pale -z-0"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 px-6 bg-paper">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink mb-4">Powerful Features</h2>
             <p className="text-muted font-medium max-w-xl mx-auto">Everything you need to take control of your spending, packed into a blazing fast, intuitive interface.</p>
           </div>
 

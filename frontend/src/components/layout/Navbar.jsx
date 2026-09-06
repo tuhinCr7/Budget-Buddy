@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LogOut, Wallet } from 'lucide-react';
 import { AuthContext } from '../../context/AuthContext';
+import ThemeToggle from '../ThemeToggle';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -22,6 +23,7 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <div className="hidden sm:flex items-center gap-3 pr-4 border-r border-line">
               <div className="w-8 h-8 rounded-full bg-bottle-green-pale flex items-center justify-center text-bottle-green font-bold text-sm">
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
