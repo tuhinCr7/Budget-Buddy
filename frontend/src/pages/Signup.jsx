@@ -30,6 +30,16 @@ const Signup = () => {
     }
   }, [email]);
 
+  // Clear errors when user types
+  useEffect(() => {
+    if (emailError) setEmailError('');
+    if (serverError) setServerError('');
+  }, [name, email, password]);
+
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (emailError) return;

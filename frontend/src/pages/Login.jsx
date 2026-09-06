@@ -20,6 +20,11 @@ const Login = () => {
   if (user) {
     return <Navigate to="/dashboard" />;
   }
+  // Clear errors when user types
+  useEffect(() => {
+    if (emailError) setEmailError('');
+    if (serverError) setServerError('');
+  }, [email, password]);
 
   useEffect(() => {
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -28,6 +33,11 @@ const Login = () => {
       setEmailError('');
     }
   }, [email]);
+
+  // If already logged in, go to dashboard
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
