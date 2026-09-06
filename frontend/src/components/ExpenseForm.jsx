@@ -21,15 +21,15 @@ const ExpenseForm = ({ onSave, onCancel }) => {
 
   // Currency auto-formatter
   const handleAmountChange = (e) => {
-    let val = e.target.value.replace(/\D/g, '');
+    let val = e.target.value.replace(/\D/g, ''); // Only allow digits
     if (!val) {
       setDisplayAmount('');
       setRawAmount('');
       return;
     }
-    const num = parseInt(val, 10) / 100;
+    const num = parseInt(val, 10);
     setRawAmount(num);
-    setDisplayAmount(num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    setDisplayAmount(num.toString());
   };
 
   const handleSubmit = async (e) => {
